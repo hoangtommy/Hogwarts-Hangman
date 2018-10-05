@@ -5,9 +5,9 @@ module Display
   	puts 'Welcome to Hangman: The Hogwarts Editions'
   	puts ''
   	puts 'Like the regular hangman, you\'ll be given a word represented by blank spaces.
-  		You will have 6 guesses to figure out the word, 
-  		at anytime you can attempt to guess the entire word. 
-  		Doing so only counts as a single guess.'
+  		You will have 6 guesses to figure out the word. 
+  		You can guess a single letter or you can attempt to guess the entire word. 
+  		If guessing the entire word, you won\'t get feedback on which letters are and aren\'t present.'
   	puts ''
   	puts 'Press ENTER to start the game'
   	gets
@@ -28,31 +28,49 @@ module Display
   	else
   	 '1 guess left. make it good!'
   	end
-  end
-
-  def display_word(word, correct_letters) # assume word & correctLetters are arrays
-  	word_length = word.length
   	puts ''
-  	puts "#{word_length} letter word"
-
-  	# word = [m, a, g, i, c]
-  	# __ __ __ __ __
-  	# correctLetters = [a, c]
-    # __ a __ __ c
-    word_display = ''
-
-    word.each_with_index do |letter, idx|
-
-      if correctLetters.include?(letter)
-      	word_display
-      	# "#{letter}" in word[idx] position
-      else
-      	# '__' in word[idx] position
-      end
-    end
-
-  	puts "#{'__ ' * word_length}"
-  	puts "#{correctLetters[0]}  #{correctLetters[0]}  #{correctLetters[0]}"
- 
   end
+
+  def display_letters_used(letters)
+  	puts "Letters used: #{letters.join(', ')}"
+  	puts ''
+  end
+
+  def display_feedback(hidden_word) # [nil, 'a', nil, nil, 'c']
+  	length = hidden_word.length
+  	feedback = Array.new(length)
+  	hidden_word.each_with_index do |letter, idx|
+  	  if letter.nil?
+  	  	feedback[idx] = '__'
+  	  else
+  	  	feedback[idx] = letter
+  	  end
+  	end
+  	puts feedback.join(' ')
+  end
+
+  def display_get_guess
+  	puts 'Type in a single letter. You can also type in a word to guess the entire word.'
+  end
+
+  def display_error(word_length)
+  	puts "Please type in a single letter or a #{word_length} letter word."
+  end
+
+  def display_end_game(outcome, word)
+  	if outcome == 'won'
+  	  puts "You guessed it, #{word}!"
+  	else
+  	  puts "You might be more muggle than you thought! The word was '#{word}.'"
+  	  sleep(0.5)
+  	  puts 'Just kidding, being good at word guessing doesn\'t mean you\'d make a bad witch/wizard'
+  	end
+  	puts ''
+  end
+
+  def display_replay_message(outcome)
+  	puts "Since you #{outcome}, do you want to play again?"
+  	puts "Type in 'yes' or 'no'"
+  end
+
 end
