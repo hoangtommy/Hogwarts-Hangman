@@ -21,23 +21,28 @@ class Game
   private
 
   def play_game
+  	display_blanks(@word)
   	until @guesses_left == 0 || @game_over
   	  # to-add: prompt user to save game and quit
   	  guess = get_player_guess # 'r'
-  	  @guesses_left -= 1
 
   	  if guess_correct?(guess) 
   	    @word.split('').each_with_index do |letter, idx|
-  	  	  blanks_to_fill[idx] = letter if guess == letter # feels redundant to check again here
+  	  	  next if !@blanks_to_fill[idx].nil?
+  	  	  @blanks_to_fill[idx] = letter if letter =~ /[\s\W]/
+  	  	  @blanks_to_fill[idx] = letter if guess == letter # feels redundant to check again here
   	    end
-  	    display_feedback(blanks_to_fill)
+  	    display_feedback(@blanks_to_fill)
   	  else
-  	    display_hangman(@guesses_left) # also displays remaining guesses
   	    display_letters_used(@letters_used)
   	  end
 
-  	end_game('loss') if @guesses_left == 0
+	  end_game('won') if @blanks_to_fill.all? { |letter| !letter.nil? }
+  	  display_hangman(@guesses_left) # also displays remaining guesses
+  	  @game_over = true if @guesses_left == 0
+  	  @guesses_left -= 1
   	end
+  	end_game('loss')
   end
 
   def guess_correct?(guess) # 'r'
@@ -45,7 +50,6 @@ class Game
   	  end_game('won')
   	elsif @word.include?(guess)
   	  @correct_letters << guess unless @correct_letters.include?(guess)
-	  end_game('won') if @word.split('').all? { |letter| @correct_letters.include?(letter) }
 	  return true
   	else
   	  @letters_used << guess if guess.length == 1
@@ -54,7 +58,7 @@ class Game
   end
 
   def get_random_word
-    dictionary = File.open('hogwarts_dictionary.txt', 'r').readlines
+    dictionary = File.open('hogwartsDictionary.txt', 'r').readlines
     word = dictionary[rand(dictionary.length)].downcase
   end
 

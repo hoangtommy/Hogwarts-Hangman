@@ -13,20 +13,28 @@ module Display
   	gets
   end
 
+  def display_blanks(word)
+  	puts "A #{word.length} letter word."
+  	puts ''
+  	temp = []
+  	word.split('').each do |letter|
+  	  letter =~ /[\s\W]/ ? temp << letter : temp << nil
+  	end
+  	display_feedback(temp)
+  end
+
   def display_hangman(turns_left)
   	case(turns_left)
   	when 6
-  	 'You have 6 turns left'
+  	 puts 'You have 5 turns left'
   	when 5
-  	 'You only have 5 guesses left'
+  	 puts 'You only have 4 guesses left'
   	  when 4
-  	 '4 more turns'
+  	 puts '3 more turns'
   	when 3
-  	 '3 guesses remaining'
+  	 puts '2 guesses remaining'
   	when 2
-  	 '2 turns left yo'
-  	else
-  	 '1 guess left. make it good!'
+  	 puts '1 turns left yo'
   	end
   	puts ''
   end
@@ -46,11 +54,13 @@ module Display
   	  	feedback[idx] = letter
   	  end
   	end
+  	puts ''
   	puts feedback.join(' ')
+  	puts ''
   end
 
   def display_get_guess
-  	puts 'Type in a single letter. You can also type in a word to guess the entire word.'
+  	puts 'Your guess:'
   end
 
   def display_error(word_length)
