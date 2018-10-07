@@ -14,7 +14,8 @@ module Display
   end
 
   def display_blanks(word)
-  	puts "A #{word.length} letter word."
+  	word_length = word.include?(' ') ? word.length - 1 : word.length
+  	puts "A #{word_length} letter word."
   	puts ''
   	temp = []
   	word.split('').each do |letter|
@@ -28,14 +29,17 @@ module Display
   	when 6
   	 puts 'You have 5 turns left'
   	when 5
-  	 puts 'You only have 4 guesses left'
+  	 puts 'You only have 5 guesses left'
   	  when 4
-  	 puts '3 more turns'
+  	 puts '4 more turns'
   	when 3
-  	 puts '2 guesses remaining'
+  	 puts '3 guesses remaining'
   	when 2
-  	 puts '1 turns left yo'
+  	 puts '2 turns left yo'
+  	else
+  	 puts 'last try!'
   	end
+  	puts ''
   	puts ''
   end
 
@@ -57,9 +61,11 @@ module Display
   	puts ''
   	puts feedback.join(' ')
   	puts ''
+  	puts ''
   end
 
   def display_get_guess
+  	puts ''
   	puts 'Your guess:'
   end
 
@@ -67,11 +73,15 @@ module Display
   	puts "Please type in a single letter or a #{word_length} letter word."
   end
 
+  def display_letter_exist_error
+  	puts 'You\'ve already used this letter'
+  end
+
   def display_end_game(outcome, word)
   	if outcome == 'won'
   	  puts "You guessed it, #{word}!"
   	else
-  	  puts "You might be more muggle than you thought! The word was '#{word}.'"
+  	  puts "You might be more muggle than you thought! The word was '#{word}'"
   	  sleep(0.5)
   	  puts 'Just kidding, being good at word guessing doesn\'t mean you\'d make a bad witch/wizard'
   	end

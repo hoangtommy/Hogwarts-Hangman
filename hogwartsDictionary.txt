@@ -10,7 +10,6 @@ centaurs
 dementor
 diagon alley
 dragon
-dumbledore
 firebolt
 floo network
 galleon

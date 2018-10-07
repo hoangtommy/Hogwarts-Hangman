@@ -35,12 +35,12 @@ class Game
   	    display_feedback(@blanks_to_fill)
   	  else
   	    display_letters_used(@letters_used)
+  	    @guesses_left -= 1 unless @letters_used.include?(guess)
+  	    display_hangman(@guesses_left) # also displays remaining guesses
   	  end
 
 	  end_game('won') if @blanks_to_fill.all? { |letter| !letter.nil? }
-  	  display_hangman(@guesses_left) # also displays remaining guesses
   	  @game_over = true if @guesses_left == 0
-  	  @guesses_left -= 1
   	end
   	end_game('loss')
   end
@@ -52,14 +52,15 @@ class Game
   	  @correct_letters << guess unless @correct_letters.include?(guess)
 	  return true
   	else
-  	  @letters_used << guess if guess.length == 1
+  	  @letters_used << guess if guess.length == 1 && !@letters_used.include?(guess)
   	  return false
   	end
   end
 
   def get_random_word
     dictionary = File.open('hogwartsDictionary.txt', 'r').readlines
-    word = dictionary[rand(dictionary.length)].downcase
+    word = dictionary[rand(dictionary.length)].strip.downcase
+    word
   end
 
   def get_player_guess
