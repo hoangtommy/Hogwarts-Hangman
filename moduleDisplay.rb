@@ -36,7 +36,7 @@ module Display
   	 puts '3 guesses remaining'
   	when 2
   	 puts '2 turns left yo'
-  	else
+  	when 1
   	 puts 'last try!'
   	end
   	puts ''

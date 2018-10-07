@@ -24,32 +24,31 @@ class Game
   	display_blanks(@word)
   	until @guesses_left == 0 || @game_over
   	  # to-add: prompt user to save game and quit
-  	  guess = get_player_guess # 'r'
+  	  guess = get_player_guess
 
-  	  if guess_correct?(guess) 
-  	    @word.split('').each_with_index do |letter, idx|
-  	  	  next if !@blanks_to_fill[idx].nil?
-  	  	  @blanks_to_fill[idx] = letter if letter =~ /[\s\W]/
-  	  	  @blanks_to_fill[idx] = letter if guess == letter # feels redundant to check again here
-  	    end
+  	  if guess_correct?(guess)
   	    display_feedback(@blanks_to_fill)
   	  else
   	    display_letters_used(@letters_used)
-  	    @guesses_left -= 1 unless @letters_used.include?(guess)
-  	    display_hangman(@guesses_left) # also displays remaining guesses
+  	    @guesses_left -= 1
+  	    display_hangman(@guesses_left)
   	  end
 
 	  end_game('won') if @blanks_to_fill.all? { |letter| !letter.nil? }
-  	  @game_over = true if @guesses_left == 0
   	end
   	end_game('loss')
   end
 
-  def guess_correct?(guess) # 'r'
+  def guess_correct?(guess)
   	if guess == @word
   	  end_game('won')
   	elsif @word.include?(guess)
   	  @correct_letters << guess unless @correct_letters.include?(guess)
+  	  @word.split('').each_with_index do |letter, idx|
+  	  	next if !@blanks_to_fill[idx].nil?
+  	  	@blanks_to_fill[idx] = letter if letter =~ /[\s\W]/
+  	  	@blanks_to_fill[idx] = letter if guess == letter
+  	  end
 	  return true
   	else
   	  @letters_used << guess if guess.length == 1 && !@letters_used.include?(guess)
