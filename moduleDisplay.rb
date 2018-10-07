@@ -43,9 +43,9 @@ module Display
   	puts 'Type in your wizarding name.'
   end
 
-  def display_greeting(name)
-  	puts "#{name} eh?"
-  	puts "Not sure waht house you're from but Welcome to Ravenclaw's game room!"
+  def display_farewell(name)
+  	puts "Thanks for playing #{name}!"
+  	puts "Come back to Ravenclaw's game room anytime!"
   end
 
   def display_blanks(word)

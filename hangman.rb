@@ -47,16 +47,15 @@ class Game
   	@word = get_random_word
   	@blanks_to_fill = Array.new(@word.length)
   	@game_over = false
+
   end
 
   def play_game
-  	display_blanks(@word)
   	until @guesses_left == 0 || @game_over
+  	  display_feedback(@blanks_to_fill)
   	  guess = get_player_response
 
-  	  if guess_correct?(guess)
-  	    display_feedback(@blanks_to_fill)
-  	  else
+  	  if !guess_correct?(guess)
   	    display_letters_used(@letters_used)
   	    @guesses_left -= 1
   	    display_hangman(@guesses_left)
@@ -86,7 +85,7 @@ class Game
   def get_player_name
   	display_get_player_name
   	name = gets.chomp
-  	display_greeting(name)
+  	display_farewell(name)
   	name.capitalize
   end
 
