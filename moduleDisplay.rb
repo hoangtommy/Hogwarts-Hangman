@@ -1,21 +1,56 @@
 # These methods are all used to print things to the screen
 module Display
+
   def display_instructions
   	puts ''
   	puts 'Welcome to Hangman: The Hogwarts Editions'
   	puts ''
+  	3.times do 
+  	  print '.'
+  	  sleep(0.3)
+  	end
+  	puts ''
+  	puts ''
   	puts 'Like the regular hangman, you\'ll be given a word represented by blank spaces.
   		You will have 6 guesses to figure out the word. 
   		You can guess a single letter or you can attempt to guess the entire word. 
-  		If guessing the entire word, you won\'t get feedback on which letters are and aren\'t present.'
+  		If guessing the entire word, you won\'t get feedback on which letters are and aren\'t present.
+  		To save the game at any time, type in \'save\''
   	puts ''
-  	puts 'Press ENTER to start the game'
+  	puts 'Press ENTER for the main menu'
   	gets
+  end
+
+  def display_game_options
+  	puts ''
+  	puts ''
+  	puts 'Main Menu'
+  	puts "Type '1' for New Game"
+  	puts "Type '2' to Load Game"
+  	puts ''
+  end
+
+  def display_get_saved_game
+  	puts 'What\'s your wizarding name?'
+  end
+
+  def display_name_error
+  	puts 'We don\'t have that name on record. Please try another name.'
+  	puts ''
+  end
+
+  def display_get_player_name
+  	puts 'Type in your wizarding name.'
+  end
+
+  def display_greeting(name)
+  	puts "#{name} eh?"
+  	puts "Not sure waht house you're from but Welcome to Ravenclaw's game room!"
   end
 
   def display_blanks(word)
   	word_length = word.include?(' ') ? word.length - 1 : word.length
-  	puts "A #{word_length} letter word."
+  	puts "What's a #{word_length} letter word."
   	puts ''
   	temp = []
   	word.split('').each do |letter|

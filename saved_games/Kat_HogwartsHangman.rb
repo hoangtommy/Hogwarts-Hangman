@@ -1,0 +1,1 @@
+{"guesses_left":4,"letters_used":["h","a"],"word":"firebolt","blanks_to_fill":[null,null,null,null,null,null,null,null],"game_over":false}
