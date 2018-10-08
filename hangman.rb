@@ -20,7 +20,7 @@ class Game
   end
 
   def load_game
-  	display_get_saved_game
+  	display_get_name
   	name = gets.chomp
   	filename = "saved_games/#{name.capitalize}_HogwartsHangman.rb"
   	until File.exist?(filename) do
@@ -31,8 +31,8 @@ class Game
   	set_game_files(filename)
   end
 
-  def set_game_files(file)
-  	saved_game = JSON.parse(File.read(file))
+  def set_game_files(filename)
+  	saved_game = JSON.parse(File.read(filename))
   	@guesses_left = saved_game['guesses_left']
   	@letters_used = saved_game['letters_used']
   	@word = saved_game['word']
@@ -41,44 +41,44 @@ class Game
   	@player_name = saved_game['player_name']
   end
 
-  def new_game(games_won=0)
+  def new_game
   	@guesses_left = 6
   	@letters_used = []
   	@word = get_random_word
+  	@games_won ||= 0
   	@blanks_to_fill = Array.new(@word.length)
-  	@games_won = games_won
+  	parse_word_to_blanks
   end
 
   def play_game
   	until @guesses_left == 0
   	  display_feedback(@blanks_to_fill)
+  	  display_letters_used(@letters_used)
+  	  display_hangman(@guesses_left)
   	  guess = get_player_response
-
-  	  if !guess_correct?(guess)
-  	    display_letters_used(@letters_used)
-  	    @guesses_left -= 1
-  	    display_hangman(@guesses_left)
-  	  end
-
-	  end_game('won') if @blanks_to_fill.all? { |letter| !letter.nil? }
+  	  analyze_guess(guess)
+	  end_game('won') if @blanks_to_fill.all? { |letter| !letter.nil? } || guess == @word
   	end
   	end_game('loss')
   end
 
-  def guess_correct?(guess)
-  	if guess == @word
-  	  end_game('won')
-  	elsif @word.include?(guess)
+  def analyze_guess(guess)
+  	if @word.include?(guess)
   	  @word.split('').each_with_index do |letter, idx|
   	  	next if !@blanks_to_fill[idx].nil?
-  	  	@blanks_to_fill[idx] = letter if letter =~ /[\s\W]/
+  	  	# @blanks_to_fill[idx] = letter if letter =~ /[\s\W]/
   	  	@blanks_to_fill[idx] = letter if guess == letter
   	  end
-	  return true
   	else
   	  @letters_used << guess if guess.length == 1 && !@letters_used.include?(guess)
-  	  return false
+  	  @guesses_left -= 1
   	end
+  end
+
+  def parse_word_to_blanks
+  	@word.split('').each_with_index do |char, idx|
+  	  @blanks_to_fill[idx] = char if char =~ /[\s\W]/
+    end
   end
 
   def get_player_name
@@ -127,8 +127,10 @@ class Game
   end
 
   def end_game(outcome)
-  	@games_won += 1 if outcome == 'won' # to-fix: error @games_won is nilClass
-  	display_end_game(outcome, @word)
+  	if outcome == 'won'
+  	  @games_won += 1
+  	end
+  	display_end_game(outcome, @word, @games_won)
   	prompt_replay(outcome)
   end
 
@@ -137,7 +139,7 @@ class Game
   	response = gets.chomp
   	response.downcase
   	if response == 'yes'
-  	  new_game(@game_won)
+  	  new_game
   	  play_game
   	else
   	  exit

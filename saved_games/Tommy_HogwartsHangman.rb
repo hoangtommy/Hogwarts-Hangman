@@ -1,0 +1,1 @@
+{"guesses_left":3,"letters_used":["s","p","o"],"word":"gillyweed","blanks_to_fill":[null,null,null,null,null,null,"e","e",null],"games_won":null,"player_name":"Tommy"}

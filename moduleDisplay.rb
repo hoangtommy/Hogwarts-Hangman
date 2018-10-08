@@ -24,12 +24,12 @@ module Display
   	puts ''
   	puts ''
   	puts 'Main Menu ❾¾'
-  	puts "Type '1' for New Game"
-  	puts "Type '2' to Load Game"
+  	puts "Type '1' to Start New Game"
+  	puts "Type '2' to Load Existing Game"
   	puts ''
   end
 
-  def display_get_saved_game
+  def display_get_name
   	puts 'What\'s your wizarding name?'
   end
 
@@ -81,16 +81,18 @@ module Display
   end
 
   def display_feedback(hidden_word) # [nil, 'a', nil, nil, 'c']
-  	length = hidden_word.length
+  	num_of_special_chars = hidden_word.count { |letter| letter =~ /[\s\W]/ }
+    length = hidden_word.length - num_of_special_chars
   	feedback = Array.new(length)
-  	puts "An #{length} letter word."
-  	hidden_word.each_with_index do |letter, idx|
-  	  if letter.nil?
-  	  	feedback[idx] = '__'
-  	  else
-  	  	feedback[idx] = letter
-  	  end
-  	end
+    hidden_word.each_with_index do |letter, idx|
+      if letter.nil?
+        feedback[idx] = '__'
+      else
+        feedback[idx] = letter
+      end
+    end
+  	puts ''
+    puts "An #{length} letter word."
   	puts ''
   	puts feedback.join(' ')
   	puts ''
@@ -110,7 +112,7 @@ module Display
   	puts 'You\'ve already used this letter'
   end
 
-  def display_end_game(outcome, word)
+  def display_end_game(outcome, word, games_won)
   	if outcome == 'won'
   	  puts "You guessed it, #{word}!"
   	else
@@ -118,6 +120,7 @@ module Display
   	  sleep(0.5)
   	  puts 'Just kidding, being good at word guessing doesn\'t mean you\'d make a bad witch/wizard'
   	end
+    puts "Total words corrects: #{games_won}"
   	puts ''
   end
 

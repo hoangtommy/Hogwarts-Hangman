@@ -1,1 +1,0 @@
-{"guesses_left":5,"letters_used":["z"],"word":"firebolt","blanks_to_fill":[null,null,null,"e",null,null,null,null],"games_won":null,"player_name":"Homer"}
