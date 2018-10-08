@@ -34,7 +34,7 @@ module Display
   end
 
   def display_name_error
-  	puts 'We don\'t have that name on record. Please try another name.'
+  	puts 'We don\'t have that name on record. Have you played and saved a game before? Please try another name.'
   	puts ''
   end
 
@@ -126,6 +126,15 @@ module Display
 
   def display_replay_message(outcome)
   	puts "Since you #{outcome}, do you want to play again?"
-  	puts "Type in 'yes' or 'no'"
+  	puts "Type in 'y' for yes"
+    puts "Type in 'n' to quit"
+  end
+
+  def display_replay_error
+    puts "Please type 'y' to play another game or 'n' to quit."
+  end
+
+  def display_save_game?
+    puts 'Would you like to save your game? (y/n)'
   end
 end

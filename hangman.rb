@@ -138,11 +138,18 @@ class Game
   	display_replay_message(outcome)
   	response = gets.chomp
   	response.downcase
-  	if response == 'yes'
+    until response == 'y' || response == 'n'
+      display_replay_error
+      response = gets.chomp
+    end
+  	if response == 'y'
   	  new_game
   	  play_game
-  	else
-  	  exit
+  	elsif response == 'n'
+  	  display_save_game?
+      answer = gets.chomp
+      save_game if answer == 'y'
+      exit
   	end
   end
 end

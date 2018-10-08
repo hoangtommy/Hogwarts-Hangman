@@ -1,1 +1,1 @@
-{"guesses_left":3,"letters_used":["s","p","o"],"word":"gillyweed","blanks_to_fill":[null,null,null,null,null,null,"e","e",null],"games_won":null,"player_name":"Tommy"}
+{"guesses_left":2,"letters_used":["a","i","t","r"],"word":"house-elf","blanks_to_fill":[null,"o",null,null,"e","-","e","l","f"],"games_won":1,"player_name":"Tommy"}
