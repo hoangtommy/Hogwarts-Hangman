@@ -37,21 +37,20 @@ class Game
   	@letters_used = saved_game['letters_used']
   	@word = saved_game['word']
   	@blanks_to_fill = saved_game['blanks_to_fill']
-  	@game_over = saved_game['game_over']
+  	@games_won = saved_game['games_won']
   	@player_name = saved_game['player_name']
   end
 
-  def new_game
+  def new_game(games_won=0)
   	@guesses_left = 6
   	@letters_used = []
   	@word = get_random_word
   	@blanks_to_fill = Array.new(@word.length)
-  	@game_over = false
-
+  	@games_won = games_won
   end
 
   def play_game
-  	until @guesses_left == 0 || @game_over
+  	until @guesses_left == 0
   	  display_feedback(@blanks_to_fill)
   	  guess = get_player_response
 
@@ -114,7 +113,7 @@ class Game
 	  	:letters_used => @letters_used,
 	    :word => @word,
 	    :blanks_to_fill => @blanks_to_fill,
-	  	:game_over => @game_over,
+	  	:games_won => @games_won,
 	  	:player_name => @player_name
     }
 
@@ -127,9 +126,8 @@ class Game
   	exit
   end
 
-
   def end_game(outcome)
-  	@game_over = true
+  	@games_won += 1 if outcome == 'won' # to-fix: error @games_won is nilClass
   	display_end_game(outcome, @word)
   	prompt_replay(outcome)
   end
@@ -138,8 +136,12 @@ class Game
   	display_replay_message(outcome)
   	response = gets.chomp
   	response.downcase
-  	puts 'sorry you cant play again now'
-  	exit
+  	if response == 'yes'
+  	  new_game(@game_won)
+  	  play_game
+  	else
+  	  exit
+  	end
   end
 end
 

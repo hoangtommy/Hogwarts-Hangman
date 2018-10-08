@@ -1,9 +1,8 @@
 # These methods are all used to print things to the screen
 module Display
-
   def display_instructions
   	puts ''
-  	puts 'Welcome to Hangman: The Hogwarts Editions'
+  	puts 'Welcome to Hangman: The Hogwarts Editions ⌁☍'
   	puts ''
   	3.times do 
   	  print '.'
@@ -24,7 +23,7 @@ module Display
   def display_game_options
   	puts ''
   	puts ''
-  	puts 'Main Menu'
+  	puts 'Main Menu ❾¾'
   	puts "Type '1' for New Game"
   	puts "Type '2' to Load Game"
   	puts ''
@@ -61,18 +60,16 @@ module Display
 
   def display_hangman(turns_left)
   	case(turns_left)
-  	when 6
-  	 puts 'You have 5 turns left'
   	when 5
-  	 puts 'You only have 5 guesses left'
-  	  when 4
-  	 puts '4 more turns'
+  	 puts 'turns left: ϟϟϟϟϟ'
+  	when 4
+  	 puts 'turns left: ϟϟϟϟ'
   	when 3
-  	 puts '3 guesses remaining'
+  	 puts 'turns left: ϟϟϟ'
   	when 2
-  	 puts '2 turns left yo'
+  	 puts 'turns left: ϟϟ'
   	when 1
-  	 puts 'last try!'
+  	 puts 'turns left: ϟ'
   	end
   	puts ''
   	puts ''
@@ -86,6 +83,7 @@ module Display
   def display_feedback(hidden_word) # [nil, 'a', nil, nil, 'c']
   	length = hidden_word.length
   	feedback = Array.new(length)
+  	puts "An #{length} letter word."
   	hidden_word.each_with_index do |letter, idx|
   	  if letter.nil?
   	  	feedback[idx] = '__'
@@ -127,5 +125,4 @@ module Display
   	puts "Since you #{outcome}, do you want to play again?"
   	puts "Type in 'yes' or 'no'"
   end
-
 end
