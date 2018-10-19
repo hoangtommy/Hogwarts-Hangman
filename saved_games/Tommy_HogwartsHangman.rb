@@ -1,1 +1,1 @@
-{"guesses_left":2,"letters_used":["a","i","t","r"],"word":"house-elf","blanks_to_fill":[null,"o",null,null,"e","-","e","l","f"],"games_won":1,"player_name":"Tommy"}
+{"guesses_left":2,"letters_used":["a","l","m","u"],"word":"gringotts","blanks_to_fill":["g","r","i","n","g","o","t","t","s"],"games_won":6,"player_name":"Tommy"}
