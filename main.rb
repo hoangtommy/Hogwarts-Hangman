@@ -22,11 +22,11 @@ class Game
   def load_game
   	display_get_name
   	name = gets.chomp
-  	filename = "saved_games/#{name.capitalize}_HogwartsHangman.rb"
+  	filename = "saved_games/#{name.capitalize}_HogwartsHangman.json"
   	until File.exist?(filename) do
   	  display_name_error
   	  name = gets.chomp
-  	  filename = "saved_games/#{name.capitalize}_HogwartsHangman.rb"
+  	  filename = "saved_games/#{name.capitalize}_HogwartsHangman.json"
   	end
   	set_game_files(filename)
   end
@@ -118,7 +118,7 @@ class Game
     }
 
   	Dir.mkdir('saved_games') unless Dir.exist?('saved_games')
-  	filename = "saved_games/#{@player_name}_HogwartsHangman.rb"
+  	filename = "saved_games/#{@player_name}_HogwartsHangman.json"
   	File.open(filename, 'w') do |file|
   	  file.write(gameFile.to_json)
   	end
