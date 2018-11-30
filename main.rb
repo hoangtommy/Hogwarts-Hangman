@@ -42,12 +42,16 @@ class Game
   end
 
   def new_game
-  	@guesses_left = 6
-  	@letters_used = []
-  	@word = get_random_word
   	@games_won ||= 0
-  	@blanks_to_fill = Array.new(@word.length)
-  	parse_word_to_blanks
+  	set_game
+  end
+
+  def set_game
+    @guesses_left = 6
+    @letters_used = []
+    @word = get_random_word
+    @blanks_to_fill = Array.new(@word.length)
+    parse_word_to_blanks
   end
 
   def play_game
@@ -107,7 +111,6 @@ class Game
 
   def save_game
   	@player_name = get_player_name
-
   	gameFile = {
 	  	:guesses_left => @guesses_left,
 	  	:letters_used => @letters_used,
@@ -130,6 +133,7 @@ class Game
   	if outcome == 'won'
   	  @games_won += 1
   	end
+    set_game
   	display_end_game(outcome, @word, @games_won)
   	prompt_replay(outcome)
   end
@@ -143,7 +147,7 @@ class Game
       response = gets.chomp
     end
   	if response == 'y'
-  	  new_game
+  	  set_game
   	  play_game
   	elsif response == 'n'
   	  display_save_game?
